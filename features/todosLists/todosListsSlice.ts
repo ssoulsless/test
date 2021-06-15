@@ -16,6 +16,17 @@ export const fetchTodosLists = createAsyncThunk('fetchTodosLists', async () => {
 	return realLists;
 });
 
+export const completeTodo = createAsyncThunk<
+	{},
+	{
+		listId: number;
+		todoId: number;
+	}
+>('completeTask', async ({ listId, todoId }) => {
+	const response = await apiClient.completeTodo(listId, todoId);
+	console.log(response);
+});
+
 const todosListsSlice = createSlice({
 	name: 'todosLists',
 	initialState: initialState,
