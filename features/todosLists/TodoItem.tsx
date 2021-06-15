@@ -1,13 +1,13 @@
 import React from 'react';
 import { List } from 'react-native-paper';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
-import SwipeRightAction from './SwipeRightAction';
-import SwipeLeftAction from './SwipeLeftAction';
+import SwipeRightAction from '../../components/SwipeRightAction';
+import SwipeLeftAction from '../../components/SwipeLeftAction';
 import { FC } from 'react';
 
 import { useDispatch } from 'react-redux';
-import { navigate } from '../utils/navigation';
-import { completeTodo } from '../api';
+import { navigate } from '../../utils/navigation';
+import { completeTodo, deleteTodo } from './todosListsSlice';
 import { TouchableOpacity } from 'react-native';
 
 const TodoItem: FC<{
@@ -16,11 +16,8 @@ const TodoItem: FC<{
 	id: number;
 	listId: number;
 }> = ({ text, isChecked, id, listId }) => {
-	const completeTask = async (listId: number, todoId: number) => {
-		await dispatch(completeTodo(listId, todoId));
-	};
-
 	const dispatch = useDispatch();
+
 	return (
 		<Swipeable
 			rightThreshold={100}
@@ -46,12 +43,13 @@ const TodoItem: FC<{
 				});
 				return (
 					<SwipeRightAction
-						onDeletePress={() => completeTask(listId, id)}
+						onDeletePress={() => dispatch(deleteTodo({ listId, todoId: id }))}
 						scale={trans}
 					/>
 				);
 			}}>
-			<TouchableOpacity onPress={() => completeTask(listId, id)}>
+			<TouchableOpacity
+				onPress={() => dispatch(completeTodo({ listId, todoId: id }))}>
 				<List.Item
 					title={text}
 					titleStyle={

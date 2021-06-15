@@ -53,3 +53,37 @@ export interface UserState {
 	status: 'succeeded' | 'loading' | 'failed' | 'idle';
 	error: boolean | null;
 }
+
+export interface CompleteTodoParams {
+	listId: number;
+	todoId: number;
+}
+
+export interface CreateListParams {
+	title: string;
+}
+
+export interface DeleteListParams {
+	id: number;
+}
+export interface DeleteListReturnValue {
+	id: number;
+}
+export interface DeleteTodoReturnValue {
+	listId: number;
+	todoId: number;
+}
+export interface CreateTodoParams {
+	listId: number;
+	title: string;
+}
+
+export interface EditTodoParams {
+	listId: number;
+	title: string;
+	todoId: number;
+}
+export interface DeleteTodoParams {
+	listId: number;
+	todoId: number;
+}

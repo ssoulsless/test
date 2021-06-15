@@ -1,14 +1,11 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { FC } from 'react';
+import TodoForm from '../features/todosLists/TodoForm';
 
-const SingleTodoForm = () => {
-	return (
-		<View>
-			<Text></Text>
-		</View>
-	);
+const SingleTodoForm: FC<{ navigation: any; route?: any }> = ({
+	navigation,
+	route,
+}) => {
+	return <TodoForm navigation={navigation} route={route} />;
 };
 
 export default SingleTodoForm;
-
-const styles = StyleSheet.create({});

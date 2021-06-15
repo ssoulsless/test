@@ -9,6 +9,8 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { List, FAB, Modal } from 'react-native-paper';
 
 import { useFocusEffect } from '@react-navigation/native';
+
+import CategoriesList from '../features/todosLists/CategoriesList';
 import TodosLists from '../features/todosLists/TodosLists';
 
 const Landing: FC<{ navigation: any }> = ({ navigation }) => {
@@ -48,28 +50,7 @@ const Landing: FC<{ navigation: any }> = ({ navigation }) => {
 				dismissable={true}
 				visible={isModalOpen}
 				onDismiss={() => setIsModalOpen(false)}>
-				<View style={styles.modalWrapper}>
-					{todosLists.map((listItem) => (
-						<List.Item
-							title={listItem.title}
-							key={listItem.id}
-							right={() => (
-								<List.Icon
-									icon="trash-can-outline"
-									color="#b47786"
-									style={styles.Icon}
-								/>
-							)}
-						/>
-					))}
-					<List.Item
-						titleStyle={styles.buttonTitle}
-						title="Новая категория"
-						right={() => (
-							<List.Icon icon="plus" style={styles.Icon} color="#a5a5a5" />
-						)}
-					/>
-				</View>
+				<CategoriesList />
 			</Modal>
 		</View>
 	);

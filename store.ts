@@ -14,10 +14,10 @@ export type RootState = ReturnType<typeof rootReducer>;
 const store = configureStore({
 	reducer: rootReducer,
 	middleware: getDefaultMiddleware({
-		serializableCheck: {
-			ignoredActions: ['fetchTodosLists/fulfilled', 'fetchTodosLists/pending'],
-		},
+		serializableCheck: false,
 	}),
 });
+
+export type AppDispatch = typeof store.dispatch;
 
 export default store;
