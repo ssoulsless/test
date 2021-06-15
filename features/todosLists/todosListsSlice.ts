@@ -26,6 +26,8 @@ export const fetchTodosLists = createAsyncThunk<ListModel[]>(
 	'todosLists/get',
 	async () => {
 		const response = await apiClient.fetchTodosLists();
+		// const realTodosLists = plainToClass(List, response.data)
+		// return realTodosLists
 		return response.data;
 	}
 );
@@ -34,6 +36,8 @@ export const completeTodo = createAsyncThunk<TodoModel, CompleteTodoParams>(
 	'todosLists/todo/completeTodo',
 	async ({ listId, todoId }) => {
 		const response = await apiClient.completeTodo(listId, todoId);
+		// const realTodo = plainToClass(Todo, response.data);
+		// return realTodo;
 		return response.data;
 	}
 );
@@ -42,6 +46,8 @@ export const createList = createAsyncThunk<ListModel, CreateListParams>(
 	'todosLists/create',
 	async ({ title }) => {
 		const response = await apiClient.createList(title);
+		// const realTodosList = plainToClass(List, response.data);
+		// return realTodosList;
 		return response.data;
 	}
 );
@@ -58,6 +64,8 @@ export const createTodo = createAsyncThunk<TodoModel, CreateTodoParams>(
 	'todosLists/todo/create',
 	async ({ listId, title }) => {
 		const response = await apiClient.createTodo(listId, title);
+		// const realTodo = plainToClass(Todo, response.data);
+		// return realTodo;
 		return response.data;
 	}
 );
@@ -66,6 +74,8 @@ export const editTodo = createAsyncThunk<TodoModel, EditTodoParams>(
 	'todosLists/todo/edit',
 	async ({ listId, title, todoId }) => {
 		const response = await apiClient.editTodo(listId, title, todoId);
+		// const realTodo = plainToClass(Todo, response.data);
+		// return realTodo;
 		return response.data;
 	}
 );

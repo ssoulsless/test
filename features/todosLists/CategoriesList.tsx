@@ -1,5 +1,5 @@
 import React, { useState, FC } from 'react';
-import { TextInput, TouchableWithoutFeedback } from 'react-native';
+import { TextInput, TouchableWithoutFeedback, FlatList } from 'react-native';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
 import { useTypedSelector } from '../../utils/hooks';
@@ -23,6 +23,7 @@ const CategoriesList: FC = () => {
 			setErrorMessage('Значение не должно превышать 30 символов');
 		} else {
 			setErrorMessage('');
+			console.log('ok');
 		}
 	};
 
@@ -32,7 +33,7 @@ const CategoriesList: FC = () => {
 
 	const createCategory = () => {
 		handleValidField();
-		if (errorMessage === '') {
+		if (textValue !== '' && textValue.length <= 30) {
 			dispatch(createList({ title: textValue }));
 			setTextValue('');
 		}
@@ -40,23 +41,27 @@ const CategoriesList: FC = () => {
 
 	return (
 		<View style={styles.modalWrapper}>
-			{todosLists.map((listItem) => (
-				<List.Item
-					title={listItem.title}
-					key={listItem.id}
-					right={() => (
-						<TouchableOpacity onPress={() => deleteCategory(listItem.id)}>
-							<List.Icon
-								icon="trash-can-outline"
-								color="#b47786"
-								style={styles.Icon}
-							/>
-						</TouchableOpacity>
-					)}
-				/>
-			))}
+			<FlatList
+				data={todosLists}
+				renderItem={({ item }) => (
+					<List.Item
+						title={item.title}
+						right={() => (
+							<TouchableOpacity onPress={() => deleteCategory(item.id)}>
+								<List.Icon
+									icon="trash-can-outline"
+									color="#b47786"
+									style={styles.Icon}
+								/>
+							</TouchableOpacity>
+						)}
+					/>
+				)}
+				keyExtractor={(item) => item.id.toString()}
+			/>
 			<View style={styles.inputWrapper}>
 				<TextInput
+					maxLength={30}
 					placeholder="Новая категория"
 					placeholderTextColor={errorMessage === '' ? '#c2c2c2' : '#f00'}
 					style={
@@ -64,7 +69,7 @@ const CategoriesList: FC = () => {
 					}
 					value={textValue}
 					onChangeText={(value) => setTextValue(value)}
-					onSubmitEditing={() => handleValidField()}
+					onEndEditing={() => handleValidField()}
 				/>
 				<TouchableWithoutFeedback onPress={() => createCategory()}>
 					<View>

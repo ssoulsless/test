@@ -20,7 +20,6 @@ const TodoItem: FC<{
 
 	return (
 		<Swipeable
-			rightThreshold={100}
 			friction={2}
 			renderLeftActions={(progress, dragX) => {
 				const trans = dragX.interpolate({

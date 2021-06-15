@@ -18,11 +18,15 @@ import { ListModel } from '../../api/types';
 import { useTypedSelector } from '../../utils/hooks';
 
 import { createTodo, editTodo } from './todosListsSlice';
+import {
+	ProfileScreenNavigationProp,
+	ProfileScreenRouteProp,
+} from '../../utils/navigation';
 
-const CreateTodo: FC<{ navigation: any; route?: any }> = ({
-	navigation,
-	route,
-}) => {
+const CreateTodo: FC<{
+	navigation: ProfileScreenNavigationProp;
+	route: ProfileScreenRouteProp;
+}> = ({ navigation, route }) => {
 	const [checked, setChecked] = useState<number>(0);
 	const [textValue, setTextValue] = useState<string>('');
 	const [errorMessage, setErrorMessage] = useState<string>('');
@@ -89,7 +93,10 @@ const CreateTodo: FC<{ navigation: any; route?: any }> = ({
 							errorMessage === '' ? styles.taskNameInput : styles.invalidInput
 						}
 						value={textValue}
-						onChangeText={(value) => setTextValue(value)}
+						onChangeText={(value) => {
+							setTextValue(value);
+							errorMessage !== '' && setErrorMessage('');
+						}}
 						onEndEditing={(e) => handleIsValidField(e.nativeEvent.text)}
 					/>
 					{errorMessage !== '' && (
@@ -103,6 +110,7 @@ const CreateTodo: FC<{ navigation: any; route?: any }> = ({
 						<Text style={styles.errorMessage}>Выберите категорию</Text>
 					)}
 					<FlatList
+						keyboardShouldPersistTaps="handled"
 						showsVerticalScrollIndicator={false}
 						data={todosLists}
 						renderItem={({ item }) => (
