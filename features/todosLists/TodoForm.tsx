@@ -45,7 +45,7 @@ const CreateTodo: FC<{
 	);
 
 	const handleIsValidField = (value: string): void => {
-		if (value === '') {
+		if (value.trim().length) {
 			setErrorMessage('Введите название задачи');
 		} else if (value.length >= 30) {
 			setErrorMessage('Значение не должно превышать 30 символов');
@@ -55,7 +55,7 @@ const CreateTodo: FC<{
 	};
 	const onDoneClick = async () => {
 		handleIsValidField(textValue);
-		if (checked !== 0 && errorMessage === '') {
+		if (checked && errorMessage.trim().length) {
 			route.params === undefined
 				? await dispatch(createTodo({ listId: checked, title: textValue }))
 				: await dispatch(
@@ -88,25 +88,29 @@ const CreateTodo: FC<{
 					<TextInput
 						placeholder="Название задачи"
 						autoFocus={true}
-						placeholderTextColor={errorMessage === '' ? '#c2c2c2' : '#f00'}
+						placeholderTextColor={
+							errorMessage.trim().length ? '#c2c2c2' : '#f00'
+						}
 						style={
-							errorMessage === '' ? styles.taskNameInput : styles.invalidInput
+							errorMessage.trim().length
+								? styles.taskNameInput
+								: styles.invalidInput
 						}
 						value={textValue}
 						onChangeText={(value) => {
 							setTextValue(value);
-							errorMessage !== '' && setErrorMessage('');
+							errorMessage.trim().length && setErrorMessage('');
 						}}
 						onEndEditing={(e) => handleIsValidField(e.nativeEvent.text)}
 					/>
-					{errorMessage !== '' && (
+					{errorMessage.trim().length && (
 						<Text style={styles.errorMessage}>{errorMessage}</Text>
 					)}
 					<List.Subheader
-						style={checked !== 0 ? styles.subheader : styles.subheaderInvalid}>
+						style={checked ? styles.subheader : styles.subheaderInvalid}>
 						Категория
 					</List.Subheader>
-					{checked === 0 && (
+					{checked && (
 						<Text style={styles.errorMessage}>Выберите категорию</Text>
 					)}
 					<FlatList
@@ -171,8 +175,8 @@ const styles = StyleSheet.create({
 	subheader: {
 		textTransform: 'uppercase',
 		color: '#b9b9b9',
-		marginLeft: 0,
 		paddingLeft: 0,
+		marginLeft: 0,
 		marginTop: 25,
 	},
 	subheaderInvalid: {
