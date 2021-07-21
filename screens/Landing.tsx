@@ -19,7 +19,11 @@ import { useFocusEffect } from '@react-navigation/native';
 import CategoriesList from '../features/todosLists/CategoriesList';
 import TodosLists from '../features/todosLists/TodosLists';
 
-const Landing: FC<{ navigation: any }> = ({ navigation }) => {
+import { ProfileScreenNavigationProp } from '../utils/navigation';
+
+const Landing: FC<{ navigation: ProfileScreenNavigationProp }> = ({
+	navigation,
+}) => {
 	const dispatch = useDispatch();
 	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 

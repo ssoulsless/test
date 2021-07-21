@@ -23,7 +23,6 @@ const CategoriesList: FC = () => {
 			setErrorMessage('Значение не должно превышать 30 символов');
 		} else {
 			setErrorMessage('');
-			console.log('ok');
 		}
 	};
 
